@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HidUP - Decode</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <nav>
+    <a href="/">Encode</a>
+    <a href="/extract" class="active">Decode</a>
+  </nav>
+
+  {% if error %}
+  <div id="error-modal" class="modal-overlay">
+    <div class="modal-box">
+      <h3>Error</h3>
+      <p>{{ error }}</p>
+      <div class="modal-actions">
+        <button onclick="closeModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <section class="wrapper">
+    <div class="main-left">
+      <h2>HidUP — Decode: Reveal Hidden Data Securely</h2>
+      <p style="color: #ccc; margin-top: 10px;">
+        Extract encrypted secrets from carrier images using your password.
+      </p>
+    </div>
+
+    <div class="main-right">
+      {% if status %}
+      <div class="result-box">
+        <h3>🔍 Extraction Result</h3>
+        <p><strong>Status:</strong> <span class="status">{{ status }}</span></p>
+        <p>
+          <a href="{{ url_for('download', filename=download) }}" class="btn-download">
+            ⬇ Download File Asli
+          </a>
+        </p>
+      </div>
+      {% else %}
+      <form id="extract-form" method="POST" enctype="multipart/form-data" action="/extract">
+        <label>Stego Images:</label><br />
+        <input type="file" name="stego_files" multiple required /><br /><br />
+
+        <div style="margin-bottom: 20px;">
+          <label>Password:</label><br />
+          <input type="password" name="password" required />
+        </div>
+
+        <button type="submit">Extract</button>
+      </form>
+      {% endif %}
+    </div>
+  </section>
+
+  <footer style="text-align: center; color: #ffffffa0; margin-top: 40px; padding: 20px 0; font-size: 0.9rem;">
+    &copy; 2025 Piki Alpian & Amellia Dwi Ningsih. All rights reserved.
+  </footer>
+
+  <script>
+    function closeModal() {
+      document.getElementById("error-modal").style.display = "none";
+    }
+
+    document.getElementById("extract-form")?.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const form = e.target;
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          body: formData,
+        });
+
+        const html = await response.text();
+        document.open();
+        document.write(html);
+        document.close();
+      } catch (error) {
+        alert("Error: " + error.message);
+      }
+    });
+  </script>
+
+</body>
+</html>

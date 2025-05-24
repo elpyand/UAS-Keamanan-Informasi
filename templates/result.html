@@ -1,0 +1,41 @@
+<div class="result-box">
+  {% if error %}
+    <!-- Modal Error -->
+    <div id="error-modal" class="modal-overlay">
+      <div class="modal-box">
+        <h3>Error</h3>
+        <p>{{ error }}</p>
+        <div class="modal-actions">
+          <button onclick="retryExtract()">🔁 Retry</button>
+          <button onclick="closeModal()">❌ Cancel</button>
+        </div>
+      </div>
+    </div>
+    <script>
+      function closeModal() {
+        document.getElementById("error-modal").style.display = "none";
+      }
+      function retryExtract() {
+        window.location.href = "/extract";
+      }
+    </script>
+  {% endif %}
+
+  {% if output_files %}
+    <h3>Embedded Images Preview</h3>
+    <div class="image-grid">
+      {% for file in output_files %}
+        <div class="image-preview">
+          <img src="{{ file }}" alt="Stego Image" />
+          <a href="{{ file }}" download>Download</a>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {% if status %}
+    <h3>🔍 Extraction Result</h3>
+    <p><strong>Status:</strong> <span class="status">{{ status }}</span></p>
+    <p><a href="{{ url_for('download', filename=download) }}" class="btn-download">⬇ Download File Asli</a></p>
+  {% endif %}
+</div>

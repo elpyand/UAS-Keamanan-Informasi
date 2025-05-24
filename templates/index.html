@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HidUP - Encode</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet"/>
+  </head>
+  <body>
+    <nav>
+      <a href="/" class="{% if request.path == '/' %}active{% endif %}">Encode</a>
+      <a href="/extract" class="{% if request.path == '/extract' %}active{% endif %}">Decode</a>
+    </nav>
+
+    <section class="wrapper">
+      <div class="main-left">
+        <h2>HidUP — Hidden Data Utility for Privacy</h2>
+        <p style="color: #ccc; margin-top: 10px;">
+          Securely embed your secrets into multiple images with ease.
+        </p>
+      </div>
+
+      <div class="main-right">
+        <form id="embed-form" method="POST" enctype="multipart/form-data">
+          <div style="margin-bottom: 20px;">
+            <label>Secret File:</label><br />
+            <input type="file" name="secret_file" id="secret_file" required />
+            <div id="secret-feedback" style="margin-top: 10px; color: #fff;"></div>
+          </div>
+
+          <div style="margin-bottom: 20px;">
+            <label>Carrier Images:</label><br />
+            <input
+              type="file"
+              name="carrier_images"
+              id="carrier_images"
+              multiple
+              required
+            />
+            <div id="carrier-feedback" style="margin-top: 10px; color: #fff;"></div>
+          </div>
+
+          <div style="margin-bottom: 20px;">
+            <label style="margin-bottom: 20px;">Password:</label><br />
+            <input type="password" name="password" required />
+          </div>
+
+          <button type="submit">Embed</button>
+        </form>
+
+        <div id="result-container"></div>
+      </div>
+    </section>
+
+    <footer
+      style="
+        text-align: center;
+        color: #ffffffa0;
+        margin-top: 40px;
+        padding: 20px 0;
+        font-size: 0.9rem;
+      "
+    >
+      &copy; 2025 Piki Alpian & Amellia Dwi Ningsih. All rights reserved.
+    </footer>
+
+    <script>
+      function handleFileInput(inputId, feedbackId) {
+        const input = document.getElementById(inputId);
+        const feedback = document.getElementById(feedbackId);
+
+        input.addEventListener("change", () => {
+          if (input.files.length > 0) {
+            feedback.innerHTML = `
+              <div class="loading-bar-container">
+                <div class="loading-bar" id="${feedbackId}-bar"></div>
+              </div>
+            `;
+
+            setTimeout(() => {
+              document.getElementById(`${feedbackId}-bar`).style.width = "100%";
+            }, 50);
+
+            setTimeout(() => {
+              feedback.innerHTML = `
+                <i
+                  class="fas fa-check-circle"
+                  style="color:#56E1E9; font-size: 1.5rem; margin-right: 8px;"
+                ></i>
+                File Loaded Successfully!
+              `;
+              feedback.style.color = "#fff";
+            }, 1600);
+          } else {
+            feedback.innerHTML = "";
+          }
+        });
+      }
+
+      handleFileInput("secret_file", "secret-feedback");
+      handleFileInput("carrier_images", "carrier-feedback");
+
+      document
+        .getElementById("embed-form")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const form = e.target;
+          const formData = new FormData(form);
+
+          try {
+            const response = await fetch(form.action || "/", {
+              method: "POST",
+              body: formData,
+            });
+
+            if (!response.ok) throw new Error("Network response was not ok");
+
+            const text = await response.text();
+
+            document.querySelector(".main-right").innerHTML = text;
+          } catch (error) {
+            alert("Error: " + error.message);
+          }
+        });
+    </script>
+  </body>
+</html>

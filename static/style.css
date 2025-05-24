@@ -1,0 +1,383 @@
+/* Reset & global */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #0A2353;
+  background-image:
+    radial-gradient(circle at 20% 30%, #112c71 20%, transparent 40%),
+    radial-gradient(circle at 80% 40%, #56E1E9 20%, transparent 40%),
+    radial-gradient(circle at 50% 70%, #5B58EB 20%, transparent 40%),
+    radial-gradient(circle at 70% 20%, #BB63FF 20%, transparent 40%),
+    radial-gradient(circle at 30% 80%, #56E1E9 15%, transparent 40%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  width: 100%;
+  overflow-x: hidden;
+  padding: 0 200px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* Navigation */
+nav {
+  padding-top: 20px;
+  display: flex;
+  gap: 20px;
+}
+
+nav a {
+  color: #FFF;
+  text-decoration: none;
+  position: relative; /* penting untuk positioning pseudo-element */
+  padding-bottom: 5px; /* beri sedikit ruang untuk garis */
+}
+
+nav a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 0%;
+  background-color: #56E1E9;
+  transition: width 0.3s ease-in-out;
+}
+
+nav a:hover::after,
+nav a.active::after {
+  width: 100%;
+}
+
+/* Layout Wrapper */
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 100%;
+  height: 100vh;
+}
+
+/* Left Section */
+.main-left {
+  max-width: 50%;
+}
+
+.main-left h2 {
+  color: #fff;
+  font-size: 4rem;
+  width: 80%;
+  font-weight: bold;
+}
+
+/* Right Section */
+.main-right {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 50%;
+  height: 80%;
+  width: 80%;
+}
+
+/* Form */
+form {
+  width: 100%;
+  height: 100%;
+  padding: 200px 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Buttons */
+button {
+  border: none;
+  background-color: #5B58EB;
+  padding: 10px 20px;
+  color: #fff;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #112c71;
+}
+
+/* Inputs */
+input {
+  border: 1px solid #FFF;
+  border-radius: 10px;
+  padding: 10px 20px;
+}
+
+input[type="file"] {
+  width: 100%;
+  background-color: transparent;
+  color: white;
+}
+
+input[type="password"] {
+  width: 100%;
+  background-color: transparent;
+  color: white;
+  border: 1px solid #FFF;
+  border-radius: 10px;
+  padding: 10px 20px;
+}
+
+/* Labels */
+label {
+  font-size: 1rem;
+}
+
+/* Break element */
+br {
+  border: none;
+}
+
+/* Loading Bar */
+.loading-bar-container {
+  width: 100%;
+  height: 10px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.loading-bar {
+  height: 100%;
+  width: 0%;
+  background-color: #56E1E9;
+  border-radius: 5px;
+  transition: width 1.5s ease-in-out;
+}
+
+/* Result Box */
+.result-box {
+  padding: 30px;
+  text-align: left;
+  color: #fff;
+  width: 100%;
+  overflow-y: auto;
+}
+
+.result-box h3 {
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+/* Text styles */
+.error-text {
+  color: #ff6b6b;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.status {
+  font-weight: bold;
+  color: #fff;
+}
+
+.hash {
+  font-family: monospace;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+/* Image Grid & Preview */
+.image-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.image-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 150px;
+}
+
+.image-preview img {
+  width: 100%;
+  border-radius: 10px;
+  border: 2px solid #56E1E9;
+  margin-bottom: 5px;
+}
+
+.image-preview a {
+  font-size: 0.9rem;
+  color: #fff;
+  text-decoration: underline;
+}
+
+/* Download Button */
+.btn-download {
+  display: inline-block;
+  background-color: #5B58EB;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-download:hover {
+  background-color: #112c71;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal-box {
+  background-color: #1c1c1c;
+  color: #fff;
+  padding: 25px 30px;
+  border-radius: 12px;
+  max-width: 450px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 0 8px rgba(0,0,0,0.8);
+}
+
+.modal-box h3 {
+  margin-bottom: 10px;
+}
+
+.modal-actions {
+  margin-top: 20px;
+}
+
+.modal-actions button {
+  padding: 10px 20px;
+  background-color: #56e1e9;
+  border: none;
+  color: #000;
+  font-weight: bold;
+  margin: 0 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal-actions button:hover {
+  background-color: #00c8d6;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  color: #ffffffa0;
+  margin-top: 40px;
+  padding: 20px 0;
+  font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  body {
+    padding: 0 20px;
+    overflow-x: hidden;
+  }
+
+  nav {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 10px;
+    padding-top: 10px;
+  }
+
+  .wrapper {
+    flex-direction: column;
+    height: auto;
+    padding: 40px 0;
+  }
+
+  .main-left,
+  .main-right {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .main-left h2 {
+    font-size: 2rem;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .main-right {
+    height: auto;
+    padding: 20px;
+  }
+
+  form {
+    padding: 0;
+    width: 100%;
+    height: auto;
+  }
+
+  input,
+  input[type="password"],
+  input[type="file"],
+  button {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .result-box {
+    padding: 20px;
+    overflow-x: auto;
+  }
+
+  .image-grid {
+    justify-content: center;
+  }
+
+  .image-preview {
+    width: 100px;
+  }
+
+  footer {
+    font-size: 0.75rem;
+    padding: 15px 10px;
+    text-align: center;
+  }
+
+  .modal-box {
+    width: 90%;
+    padding: 20px;
+  }
+}
